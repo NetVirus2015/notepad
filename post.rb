@@ -2,6 +2,14 @@
 # Задает основные методы и свойства, присущие всем разновидностям Записи
 class Post
 
+  def self.post_types
+    [Memo, Link, Task]
+  end
+
+  def self.create(type_index)
+    return post_types[type_index].new
+  end
+
   # Конструктор
   def initialize
     @created_at = Time.now # дата создания записи
@@ -24,7 +32,19 @@ class Post
   # Этот метод записывает текущее состояние объекта в файл
   def save
     # он будет только у родителя, его мы напишем позже
+    file = File.new(file_path,"w:UTF-8")
+    for item in to_strings do
+      file.puts(item)
+    end
   end
+
+  def file_path
+    current_path = File.dirname(__FILE__ )
+
+    file_name = @created_at.strftime("#{self.class.name}_%Y-%m-%d_%H-%M-%S.txt")
+  end
+
+
 end
 
 # PS: Весь набор методов, объявленных в родительском классе называется интерфейсом класса

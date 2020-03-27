@@ -12,10 +12,23 @@ class Task < Post
 
   # Этот метод пока пустой, он будет спрашивать 2 строки - описание задачи и дату дедлайна
   def read_from_console
+    puts "Что надо делать?"
+    @text = STDIN.gets.chomp
+
+    puts "К кокому числу? Укажите дату в формате ДД.ММ.ГГГГ, например 12.05.2003"
+    input = STDIN.gets.chomp
+
+    @due_date = Date.parse(input)
+
+
   end
 
   # Массив из трех строк: дедлайн задачи, описание и дата создания
   # Будет реализован в след. уроке
   def to_strings
+    time_string = "Создано: #{@created_at.strftime("%Y.%m.%d, %H:%M:%S")} \n\r \n\r"
+
+    deadline = "Крайний срок: #{@due_date}"
+    return [deadline, @text, time_string]
   end
 end
